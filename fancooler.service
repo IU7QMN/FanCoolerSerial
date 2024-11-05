@@ -1,0 +1,10 @@
+[Unit]
+Description=”Fan Controller by IU7QMN”
+
+[Service]
+Restart=always
+WorkingDirectory=/home/dvswitch/PWMFanControl/
+ExecStart=/usr/bin/python3 FanCoolerSerial.py
+
+[Install]
+WantedBy=multi-user.target
