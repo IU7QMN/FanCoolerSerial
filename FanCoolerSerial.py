@@ -1,19 +1,8 @@
-# Created by: Michael Klements
-# For 40mm 5V PWM Fan Control On A Raspberry Pi
-# Sets fan speed proportional to CPU temperature - best for good quality fans
-# Works well with a Pi Desktop Case with OLED Stats Display
-# Installation & Setup Instructions - https://www.the-diy-life.com/connecting-a-pwm-fan-to-a-raspberry-pi/
-
-# import RPi.GPIO as IO          # Calling GPIO to allow use of the GPIO pins
+# Python Script for Fan Controller
 import time                    # Calling time to allow delays to be used
 import serial
 import subprocess              # Calling subprocess to get the CPU temperature
 
-# IO.setwarnings(False)          # Do not show any GPIO warnings
-# IO.setmode (IO.BCM)            # BCM pin numbers - PIN8 as ‘GPIO14’
-# IO.setup(12,IO.OUT)            # Initialize GPIO14 as our fan output pin
-# fan = IO.PWM(12,25000)           # Set GPIO14 as a PWM output, with 100Hz frequency (this should match your fans specified PWM frequency)
-# fan.start(0)                   # Generate a PWM signal with a 0% duty cycle (fan off)
 ser = serial.Serial("/dev/ttyUSB0", 115200)
 minTemp = 20                   # Temperature and speed range variables, edit these to adjust max and min temperatures and speeds
 maxTemp = 60
@@ -41,8 +30,7 @@ while 1:                                    # Execute loop forever
     elif temp > maxTemp:
         temp = maxTemp
     tempnorm = int(renormalize(temp, [minTemp, maxTemp], [minSpeed, maxSpeed]))
-  #  fan.ChangeDutyCycle(temp)
-
+  
   # Set fan duty based on temperature, from minSpeed to maxSpeed
     command = str(tempnorm)
     try:
